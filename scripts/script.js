@@ -111,6 +111,13 @@ const products = [
     cart.splice(productIndex,1);
     getrenderCarts()
   }
+  const getTotalPriceFromCart=() =>{
+    const totalPrice=cart.reduce((acc, CurrentProduct) =>{
+      return acc + CurrentProduct.price;
+    }, 0)
+    return totalPrice;
+  }
+  
   const getrenderCarts=() =>{
     const cartItemLists=document.getElementById("cart-items")
     cartItemLists.innerHTML='';
@@ -128,9 +135,13 @@ const products = [
       cartItemElement.appendChild(removeBtn);
       //append cart item
       cartItemLists.append(cartItemElement);
-
     })
-    return cartItemLists;
+  const totalPriceElement=document.getElementById('total-price');
+  totalPriceElement.innerHTML='';
+  if(cart.length>0){
+    const totalPrice=getTotalPriceFromCart()
+    totalPriceElement.innerText=`Total = $${totalPrice}`;
+  }
   }
   const getAddToCartButton=(product)=>{
     const addCartButton=document.createElement('button');
@@ -170,7 +181,6 @@ const products = [
     card.appendChild(productPrice); 
     const addToCartButton=getAddToCartButton(product);
     card.appendChild(addToCartButton);
-
     return card;
   }
 
